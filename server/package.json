@@ -1,0 +1,35 @@
+{
+  "name": "MERNGServerBoilerplate",
+  "version": "1.0.0",
+  "description": "Tutorial Project of GraphQL with MERN",
+  "main": "server.js",
+  "author": "Gowtham Balaji",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./main.js",
+    "dev-server": "nodemon ./main.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "colors": "^1.4.0",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "cryptr": "^6.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^16.6.0",
+    "http-status": "^1.6.2",
+    "joi": "^17.7.0",
+    "joi-oid": "^1.1.2",
+    "joi-phone-number": "^5.1.1",
+    "jwt-simple": "^0.5.6",
+    "loadash": "^1.0.0",
+    "mongoose": "^6.8.4",
+    "mongoose-paginate-v2": "^1.7.1",
+    "nodemon": "^2.0.20",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1"
+  }
+}
