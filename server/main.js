@@ -2,8 +2,9 @@ const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
+const bodyParser = require("body-parser");
 
-const schema = require("./schema/schema");
+const schema = require("./schema");
 const mongoDBConnection = require("./config/db");
 const setupCORS = require("./config/cors");
 const initpassport = require("./utils/passport");
@@ -57,11 +58,12 @@ app.get("/", function (req, res) {
 
 app.use(
   "/graphql",
-  permit.allow("all"), //Play here with front-end app
-  graphqlHTTP({
+  permit.allow("all"),
+  graphqlHTTP((req, res) => ({
     schema,
     graphiql: process.env.NODE_ENV === "development",
-  }),
+    context: { user: req.user },
+  })),
 );
 
 mongoDBConnection();
