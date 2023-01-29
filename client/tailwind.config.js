@@ -1,7 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
+    fontSize: {
+      xs: "0.6rem",
+      sm: "0.8rem",
+      base: "1rem",
+      xl: "1.25rem",
+      "2xl": "1.563rem",
+      "3xl": "1.953rem",
+      "4xl": "2.441rem",
+      "5xl": "3.052rem",
+    },
     spacing: {
       px: "1px",
       0: "0",
@@ -47,38 +57,16 @@ module.exports = {
       "2xl": "1536px",
       "3xl": "1920px",
     },
-    // colors: {
-    //   orange: {
-    //     50: "#fff7ed",
-    //     100: "#ffedd5",
-    //     200: "#fed7aa",
-    //     800: "#9a3412",
-    //   },
-    // },
-    // // colors: {
-    // //   blue: "#1fb6ff",
-    // //   purple: "#7e5bef",
-    // //   pink: "#ff49db",
-    // //   orange: "#ff7849",
-    // //   green: "#13ce66",
-    // //   yellow: "#ffc82c",
-    // //   "gray-dark": "#273444",
-    // //   gray: "#8492a6",
-    // //   "gray-light": "#d3dce6",
-    // // },
-    // fontFamily: {
-    //   sans: ["Graphik", "sans-serif"],
-    //   serif: ["Merriweather", "serif"],
-    // },
-    // extend: {
-    //   spacing: {
-    //     "8xl": "96rem",
-    //     "9xl": "128rem",
-    //   },
-    //   borderRadius: {
-    //     "4xl": "2rem",
-    //   },
-    // },
+    extend: {
+      colors: {
+        "custom-dark-blue": "#244970",
+        "custom-light-blue": "#616B75",
+        "custom-notification-blue": "#2B5685",
+      },
+      fontFamily: {
+        display: ["Poppins", "sans-serif"],
+      },
+    },
   },
   plugins: [require("@tailwindcss/forms")],
 };

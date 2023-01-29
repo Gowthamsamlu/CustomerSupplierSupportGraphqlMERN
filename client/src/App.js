@@ -1,6 +1,10 @@
-import { Login } from "./components";
+import { Login, Layout, Dashboard } from "./components";
+import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
+  const state = useSelector((state) => state.UserReducer);
+
   const demoPage = false;
 
   return demoPage ? (
@@ -10,11 +14,12 @@ function App() {
       </div>
     </div>
   ) : (
-    <div className='App h-screen max-h-screen w-screen max-w-screen bg-gray-300'>
-      <div className='container'>
-        <Login />
-      </div>
-    </div>
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Dashboard />} />
+      </Route>
+    </Routes>
   );
 }
 
