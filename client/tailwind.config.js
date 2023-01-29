@@ -61,7 +61,7 @@ module.exports = {
       colors: {
         "custom-dark-blue": "#244970",
         "custom-light-blue": "#616B75",
-        "custom-notification-blue": "#2B5685",
+        "custom-notification-blue": "#356AA3",
       },
       fontFamily: {
         display: ["Poppins", "sans-serif"],

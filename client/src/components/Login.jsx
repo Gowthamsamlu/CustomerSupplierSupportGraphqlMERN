@@ -37,7 +37,11 @@ const Login = () => {
           if (response.data.status === "success") {
             toast.success("Successful Login");
             dispatch(successLogin(response.data));
-            setAuth({ accessToken: response.token });
+            setAuth({
+              accessToken: response.data.token,
+              accountType: response.data.accountType,
+              firstName: response.data.firstName,
+            });
             if (window.location.pathname === "/login") {
               navigate("/");
             }
@@ -96,10 +100,12 @@ const Login = () => {
                   : "focus:ring-custom-dark-blue focus:border-custom-dark-blue bg-transparent"
               } w-full shadow-sm sm:text-sm rounded-sm`}
               placeholder='Enter your email'
+              onKeyDown={(event) => {
+                if (event.key === "Enter") validateCredentials();
+              }}
               onChange={(event) => {
                 setEmailValidity(true);
-                if (event.key === "Enter") validateCredentials();
-                else setEmail(event.target.value);
+                setEmail(event.target.value);
               }}
             />
             {!validEmail && (
@@ -125,10 +131,12 @@ const Login = () => {
                   : "focus:ring-custom-dark-blue focus:border-custom-dark-blue bg-transparent"
               } w-full shadow-sm sm:text-sm rounded-sm`}
               placeholder='********'
+              onKeyDown={(event) => {
+                if (event.key === "Enter") validateCredentials();
+              }}
               onChange={(event) => {
                 setPassswordValidity(true);
-                if (event.key === "Enter") validateCredentials();
-                else setPassword(event.target.value);
+                setPassword(event.target.value);
               }}
             />
             {!validPassword && (

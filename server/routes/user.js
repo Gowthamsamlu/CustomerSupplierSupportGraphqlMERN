@@ -49,10 +49,19 @@ router.post("/signin", permit.allow("all"), async (req, res) => {
         userId: user.id,
       };
       const token = jwt.encode(payload, process.env.JWT_SECRET);
-      return res.status(HTTPStatus.OK).send({
-        status: "success",
-        token: `JWT ${token}`,
-      });
+      if (user.accountStatus === "allowed") {
+        return res.status(HTTPStatus.OK).send({
+          status: "success",
+          token: `JWT ${token}`,
+          firstName: user.firstname,
+          accountType: user.accountType,
+        });
+      } else {
+        return res.status(HTTPStatus.OK).send({
+          status: "error",
+          message: "User account status - " + user.accountStatus,
+        });
+      }
     } else
       return res.status(HTTPStatus.OK).send({
         status: "error",
