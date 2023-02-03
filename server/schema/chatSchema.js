@@ -16,6 +16,7 @@ const {
 const ChatListType = new GraphQLObjectType({
   name: "ChatList",
   fields: () => ({
+    id: { type: GraphQLID },
     person2: { type: GraphQLID },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLString },
@@ -52,17 +53,22 @@ const chatListQuery = {
       type: GraphQLID,
     },
   },
-  async resolve(parent, args) {
+  async resolve(parent, args, context) {
     const chatList = await ChatMessages.find({
-      $or: [{ sender: args.loggedInUser }, { recipient: args.loggedInUser }],
+      $or: [
+        { sender: context.user ? context.user._id : args.loggedInUser },
+        { recipient: context.user ? context.user._id : args.loggedInUser },
+      ],
     }).sort({ updatedAt: -1 });
     const refinedList = [];
     chatList.map((item) => {
       const person2 =
-        item.sender.toString() === args.loggedInUser
+        item.sender.toString() ===
+        (context.user ? context.user._id : args.loggedInUser)
           ? item.recipient
           : item.sender;
       const refinedItem = {
+        id: item._id,
         person2,
         message: item.message,
         createdAt: item.createdAt,

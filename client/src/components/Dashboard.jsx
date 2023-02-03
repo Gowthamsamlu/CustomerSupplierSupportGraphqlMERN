@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import ChatList from "./ChatList";
 
 const Dashboard = () => {
   const state = useSelector((state) => state.UserReducer);
@@ -25,7 +26,7 @@ const Dashboard = () => {
           )}
         </div>
         <div className='grid grid-cols-4 gap-2'>
-          <div className=''>Chat List</div>
+          <ChatList />
           <div className='col-span-3 bg-red-600 px-2 py-1'>Current Chat</div>
         </div>
       </div>

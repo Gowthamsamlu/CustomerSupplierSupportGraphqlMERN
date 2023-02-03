@@ -1,15 +1,14 @@
 import React from "react";
 import { toast } from "react-hot-toast";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
-import { successLogin, failedLogin, logout } from "../redux/Actions/Actions";
+import { successLogin } from "../redux/Actions/Actions";
 
 const Login = () => {
   const LOGIN_URL = "/user/signin";
-  const state = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();

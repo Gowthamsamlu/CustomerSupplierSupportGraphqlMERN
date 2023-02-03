@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import { Toaster, ToastIcon, toast, resolveValue } from "react-hot-toast";
+import { Toaster, ToastIcon, resolveValue } from "react-hot-toast";
 
 export default function TailwindToaster() {
   return (
