@@ -52,8 +52,9 @@ router.post("/signin", permit.allow("all"), async (req, res) => {
       if (user.accountStatus === "allowed") {
         return res.status(HTTPStatus.OK).send({
           status: "success",
+          id: user.id,
           token: `JWT ${token}`,
-          firstName: user.firstname,
+          firstname: user.firstname,
           accountType: user.accountType,
         });
       } else {

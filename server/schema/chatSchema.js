@@ -17,7 +17,12 @@ const ChatListType = new GraphQLObjectType({
   name: "ChatList",
   fields: () => ({
     id: { type: GraphQLID },
-    person2: { type: GraphQLID },
+    person2: {
+      type: UserType,
+      resolve(parent, args) {
+        return User.findById(parent.person2);
+      },
+    },
     message: { type: GraphQLString },
     createdAt: { type: GraphQLString },
     updatedAt: { type: GraphQLString },
@@ -91,10 +96,26 @@ const chatMsgsQuery = {
     loggedInUser: {
       type: GraphQLID,
     },
+    secondPerson: {
+      type: GraphQLID,
+    },
   },
   resolve(parent, args) {
     return ChatMessages.find({
-      $or: [{ sender: args.loggedInUser }, { recipient: args.loggedInUser }],
+      $or: [
+        {
+          $and: [
+            { sender: args.secondPerson },
+            { recipient: args.loggedInUser },
+          ],
+        },
+        {
+          $and: [
+            { sender: args.loggedInUser },
+            { recipient: args.secondPerson },
+          ],
+        },
+      ],
     }).sort({ createdAt: 1 });
   },
 };

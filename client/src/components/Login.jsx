@@ -37,9 +37,10 @@ const Login = () => {
             toast.success("Successful Login");
             dispatch(successLogin(response.data));
             setAuth({
+              id: response.data.id,
               accessToken: response.data.token,
               accountType: response.data.accountType,
-              firstName: response.data.firstName,
+              firstname: response.data.firstname,
             });
             if (window.location.pathname === "/login") {
               navigate("/");
