@@ -13,6 +13,16 @@ const {
   GraphQLInt,
 } = require("graphql");
 
+const ChatListType = new GraphQLObjectType({
+  name: "ChatList",
+  fields: () => ({
+    person2: { type: GraphQLID },
+    message: { type: GraphQLString },
+    createdAt: { type: GraphQLString },
+    updatedAt: { type: GraphQLString },
+  }),
+});
+
 const ChatMsgType = new GraphQLObjectType({
   name: "ChatMsg",
   fields: () => ({
@@ -34,6 +44,40 @@ const ChatMsgType = new GraphQLObjectType({
     createdAt: { type: GraphQLString },
   }),
 });
+
+const chatListQuery = {
+  type: new GraphQLList(ChatListType),
+  args: {
+    loggedInUser: {
+      type: GraphQLID,
+    },
+  },
+  async resolve(parent, args) {
+    const chatList = await ChatMessages.find({
+      $or: [{ sender: args.loggedInUser }, { recipient: args.loggedInUser }],
+    }).sort({ updatedAt: -1 });
+    const refinedList = [];
+    chatList.map((item) => {
+      const person2 =
+        item.sender.toString() === args.loggedInUser
+          ? item.recipient
+          : item.sender;
+      const refinedItem = {
+        person2,
+        message: item.message,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+      };
+      if (
+        refinedList.filter((item) => {
+          return item.person2.toString() === person2.toString();
+        }).length === 0
+      )
+        refinedList.push(refinedItem);
+    });
+    return refinedList;
+  },
+};
 
 const chatMsgsQuery = {
   type: new GraphQLList(ChatMsgType),
@@ -69,5 +113,6 @@ const addChatMutation = {
 module.exports = {
   ChatMsgType,
   chatMsgsQuery,
+  chatListQuery,
   addChatMutation,
 };

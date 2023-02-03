@@ -9,6 +9,7 @@ const RootQuery = new GraphQLObjectType({
     users: userSchema.usersQuery,
     user: userSchema.userQuery,
     usersByAccType: userSchema.usersByAccountType,
+    chatListQuery: chatSchema.chatListQuery,
     chatMsgsQuery: chatSchema.chatMsgsQuery,
   },
 });
