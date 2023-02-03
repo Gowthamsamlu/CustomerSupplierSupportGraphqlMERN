@@ -16,15 +16,15 @@ const Dashboard = () => {
           Welcome {state.user.firstname},
         </h1>
         <div className='flex justify-start space-x-3 ml-4'>
-          <button className='bg-custom-dark-blue text-gray-100 font-semibold px-5 py-1.5 rounded-sm'>
+          <button className='bg-custom-dark-blue text-gray-100 text-sm lg:text-lg font-semibold px-3 lg:px-5 py-1 lg:py-1.5 rounded-sm'>
             New Chat
           </button>
           {state.user.accountType === "supplier" && (
             <>
-              <button className='bg-custom-dark-blue text-gray-100 font-semibold px-3 py-1.5 rounded-sm'>
+              <button className='bg-custom-dark-blue text-gray-100 text-sm lg:text-lg font-semibold px-3 lg:px-5 py-1 lg:py-1.5 rounded-sm'>
                 Add Customer
               </button>
-              <button className='bg-custom-dark-blue text-gray-100 font-semibold px-3 py-1.5 rounded-sm'>
+              <button className='bg-custom-dark-blue text-gray-100 text-sm lg:text-lg font-semibold px-3 lg:px-5 py-1 lg:py-1.5 rounded-sm'>
                 Add Supplier
               </button>
             </>

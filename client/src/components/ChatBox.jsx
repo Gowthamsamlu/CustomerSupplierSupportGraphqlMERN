@@ -1,9 +1,10 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { useSelector } from "react-redux";
 
 import { Spinner, formatDate } from "./";
 import { GET_SPECIFIC_CHAT } from "../queries/chatQueries";
+import { ADD_CHAT } from "../mutations/chatMutations";
 
 const ChatBox = ({ activeSecondPerson }) => {
   const state = useSelector((state) => state.UserReducer);
@@ -15,9 +16,26 @@ const ChatBox = ({ activeSecondPerson }) => {
   });
 
   const [message, setMessage] = React.useState("");
+  const [addChat] = useMutation(ADD_CHAT, {
+    variables: {
+      message,
+      sender: state.user.id,
+      recipient: activeSecondPerson,
+    },
+    refetchQueries: [
+      {
+        query: GET_SPECIFIC_CHAT,
+        variables: {
+          stateUserId: state.user.id,
+          activeSecondPersonId: activeSecondPerson,
+        },
+      },
+    ],
+  });
 
   const postMessage = () => {
-    alert(message);
+    addChat(message);
+    setMessage("");
   };
 
   if (loading) return <Spinner />;
@@ -49,8 +67,8 @@ const ChatBox = ({ activeSecondPerson }) => {
                 );
               })}
             </div>
-            <div className='grid grid-cols-12 gap-1 px-3 py-1  border-red-600'>
-              <div className='col-span-11 border-2'>
+            <div className='grid grid-cols-12 gap-1 px-3 py-1 '>
+              <div className='col-span-10 border-2 p-0.5'>
                 <input
                   type='test'
                   name='Message'
@@ -59,6 +77,7 @@ const ChatBox = ({ activeSecondPerson }) => {
                   className={`p-2 border-2 border-custom-dark-blue focus:ring-custom-dark-blue
               w-full shadow-sm sm:text-sm rounded-sm focus:rounded-sm`}
                   placeholder='Type Something'
+                  value={message}
                   onKeyDown={(event) => {
                     if (event.key === "Enter") postMessage();
                   }}
@@ -67,7 +86,7 @@ const ChatBox = ({ activeSecondPerson }) => {
                   }}
                 />
               </div>
-              <div className='col-span-1 py-1'>
+              <div className='col-span-2 py-1'>
                 <button
                   onClick={(event) => {
                     postMessage();

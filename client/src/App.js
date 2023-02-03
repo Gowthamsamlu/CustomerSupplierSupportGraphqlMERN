@@ -6,12 +6,12 @@ const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        clients: {
+        chatMsgsQuery: {
           merge(existing, incoming) {
             return incoming;
           },
         },
-        projects: {
+        chatListQuery: {
           merge(existing, incoming) {
             return incoming;
           },
