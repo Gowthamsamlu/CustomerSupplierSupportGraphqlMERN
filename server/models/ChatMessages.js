@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const chatSchema = new Schema(
   {
-    message: { type: String, trim: true, unique: true, sparse: true },
+    message: { type: String, trim: true, sparse: true },
     validflag: {
       type: Number,
       enum: [1, 2],

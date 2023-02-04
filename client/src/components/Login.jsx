@@ -72,7 +72,7 @@ const Login = () => {
 
   return (
     <div className='flex justify-center py-20 px-10'>
-      <div className='flex-col w-screen lg:w-3/12 lg:mt-10'>
+      <div className='flex-col w-screen md:w-6/12 lg:w-3/12 lg:mt-10'>
         <h2 className='text-2xl font-semibold text-custom-dark-blue'>
           Welcome Back!
         </h2>

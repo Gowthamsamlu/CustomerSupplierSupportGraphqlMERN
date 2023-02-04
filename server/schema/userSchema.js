@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const ChatMessages = require("../models/ChatMessages");
 const { hashPassword, comparePassword } = require("../utils/userAuth");
 const {
   GraphQLObjectType,
@@ -26,9 +27,25 @@ const UserType = new GraphQLObjectType({
 
 const usersQuery = {
   type: new GraphQLList(UserType),
-  resolve(parent, args, context) {
-    console.log(context);
-    return User.find();
+  args: { loggedInUser: { type: GraphQLID } },
+  async resolve(parent, args, context) {
+    const chatList = await ChatMessages.find({
+      $or: [{ sender: args.loggedInUser }, { recipient: args.loggedInUser }],
+    }).sort({ updatedAt: -1 });
+    const alreadyKnown = [];
+    chatList.map((item) => {
+      const person2 =
+        item.sender.toString() === args.loggedInUser
+          ? item.recipient
+          : item.sender;
+      alreadyKnown.push(person2);
+    });
+    alreadyKnown.push(args.loggedInUser);
+    return User.find({
+      _id: {
+        $nin: alreadyKnown,
+      },
+    });
   },
 };
 

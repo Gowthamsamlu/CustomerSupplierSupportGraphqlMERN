@@ -60,16 +60,12 @@ const chatListQuery = {
   },
   async resolve(parent, args, context) {
     const chatList = await ChatMessages.find({
-      $or: [
-        { sender: context.user ? context.user._id : args.loggedInUser },
-        { recipient: context.user ? context.user._id : args.loggedInUser },
-      ],
+      $or: [{ sender: args.loggedInUser }, { recipient: args.loggedInUser }],
     }).sort({ updatedAt: -1 });
     const refinedList = [];
     chatList.map((item) => {
       const person2 =
-        item.sender.toString() ===
-        (context.user ? context.user._id : args.loggedInUser)
+        item.sender.toString() === args.loggedInUser
           ? item.recipient
           : item.sender;
       const refinedItem = {
