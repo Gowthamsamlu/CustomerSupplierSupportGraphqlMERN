@@ -7,6 +7,8 @@ export { default as Spinner } from "./Spinner";
 export { default as PostMessage } from "./PostMessage";
 export { default as AddUser } from "./AddUser";
 export { default as NewChat } from "./NewChat";
+export { default as ChangePassword } from "./ChangePassword";
+
 const months = [
   "Jan",
   "Feb",

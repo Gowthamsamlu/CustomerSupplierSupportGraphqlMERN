@@ -23,4 +23,21 @@ const ADD_USER = gql`
   }
 `;
 
-export { ADD_USER };
+const CHANGE_PASSWORD = gql`
+  mutation changePassword(
+    $oldPassword: String!
+    $newPassword: String!
+    $loggedInUser: ID!
+  ) {
+    changePassword(
+      oldPassword: $oldPassword
+      newPassword: $newPassword
+      loggedInUser: $loggedInUser
+    ) {
+      id
+      errMessage
+    }
+  }
+`;
+
+export { ADD_USER, CHANGE_PASSWORD };

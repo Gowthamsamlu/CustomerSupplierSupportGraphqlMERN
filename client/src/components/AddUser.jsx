@@ -50,7 +50,6 @@ export default function AddUser({ accountType, closeConfirmation }) {
       accountType,
       password,
     );
-    console.log(addResult);
     if (addResult.data.addUser.id === null)
       setErrMessage(addResult.data.addUser.errMessage);
     else {

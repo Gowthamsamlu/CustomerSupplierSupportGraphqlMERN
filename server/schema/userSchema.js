@@ -124,9 +124,12 @@ const changePasswordMutation = {
   args: {
     oldPassword: { type: GraphQLString },
     newPassword: { type: GraphQLString },
+    loggedInUser: {
+      type: GraphQLID,
+    },
   },
-  async resolve(parent, args, context) {
-    const requestedUser = User.findById(context.user._id);
+  async resolve(parent, args) {
+    const requestedUser = await User.findById(args.loggedInUser);
     if (!requestedUser) {
       return { errMessage: "User doesn't exist" };
     }
@@ -137,7 +140,7 @@ const changePasswordMutation = {
     if (!isMatched) {
       return { errMessage: "Old password doesn't match" };
     }
-    const updatedUser = User.findByIdAndUpdate(context.user._id, {
+    const updatedUser = User.findByIdAndUpdate(args.loggedInUser, {
       $set: {
         password: await hashPassword(args.newPassword),
       },
